@@ -149,6 +149,17 @@ body {
   cursor: not-allowed;
 }
 
+.boton--secundario {
+  margin-top: 12px;
+  background: #fff;
+  color: var(--azul);
+  border: 1px solid var(--gris-borde);
+}
+
+.boton--secundario:hover:not(:disabled) {
+  background: var(--gris-fondo);
+}
+
 .campo {
   margin-bottom: 18px;
 }

@@ -1,3 +1,5 @@
+import { formatearDinero } from './dinero';
+
 interface PropsTarjetaProducto {
   nombre: string;
   descripcion: string;
@@ -26,12 +28,4 @@ export function TarjetaProducto({
       </div>
     </article>
   );
-}
-
-export function formatearDinero(cantidad: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-  }).format(cantidad);
 }

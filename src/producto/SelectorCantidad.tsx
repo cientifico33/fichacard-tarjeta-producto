@@ -1,4 +1,4 @@
-import { formatearDinero } from './TarjetaProducto';
+import { formatearDinero } from './dinero';
 
 interface PropsSelectorCantidad {
   cantidad: number;
