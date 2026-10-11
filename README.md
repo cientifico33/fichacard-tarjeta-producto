@@ -77,44 +77,42 @@ Los errores aparecen cuando el usuario sale del campo o cuando intenta enviar, n
 
 ## Decisiones de diseño
 
-### Toda la validación vive en funciones puras
+### Validación
 
 `validarTarjeta.ts` y `validarFormulario.ts` no conocen React: reciben strings y devuelven errores.
 Eso las hace probar sin montar nada, y deja el componente con una sola responsabilidad, que es
 mostrar lo que ellas deciden. `FormularioPago.tsx` no calcula nada: pregunta, muestra y envía.
 
-### Las reglas están escritas a mano
+Las reglas están escritas a mano en lugar de usar una librería de tarjetas. Para lo que pide el
+enunciado son unas 120 líneas de funciones puras que se pueden explicar por completo sin ayuda. Una
+dependencia constante de una librería externa es más riesgo que el código que reemplaza.
 
-Podría haberse usado una librería de tarjetas, pero para lo que pide el enunciado son unas 120
-líneas de funciones puras que se pueden explicar por completo sin ayuda. Una dependencia constante
-de una librería externa es más riesgo que el código que reemplaza.
-
-### Un componente `Campo` y nada más
+### Componentes
 
 Cada input es un `Campo` con su etiqueta, su pista y su error. Todos comparten la misma forma
 de marcado, así que la accesibilidad se resuelve en un solo lugar: `label` con `htmlFor`,
 `aria-invalid`, `aria-describedby` apuntando al mensaje de error y `role="alert"` para que el
 lector de pantalla lo anuncie.
 
-### El error se calcula siempre y se muestra a tiempo
+### Errores en pantalla
 
 `validarPago` devuelve el estado real de los cinco campos en cada render, pero el componente solo
 enseña los que el usuario ya tocó o intentó enviar. Marcarle el error a alguien que está
 escribiendo su nombre es más frustrante que útil.
 
-### El número de la tarjeta no sobrevive al pago
+### Datos de la tarjeta
 
 El dato vive en el estado del formulario mientras el formulario está montado. Al aprobarse, el
 componente se desmonta y ese estado desaparece: en pantalla solo quedan el número de orden y los
 últimos cuatro dígitos. `procesarPago` recibe el número completo, decide con él y devuelve únicamente
 esos cuatro dígitos. No hay `localStorage` ni `console.log` en todo el proyecto.
 
-### CSS en un solo archivo
+### Estilos
 
 La pantalla es una, no un sistema de diseño. Partir `estilos.css` en varios módulos sería adelantar
 estructura que no hace falta todavía. Si el proyecto creciera, ahí sí.
 
-### Sin librería de enrutado ni de estado
+### Dependencias
 
 Solo hay una pantalla con tres estados (`producto`, `pago`, `exito`). Eso es un `useState` con un
 string, no Redux ni un router.
