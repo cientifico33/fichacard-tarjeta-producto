@@ -41,7 +41,11 @@ export default function App() {
       </header>
 
       {vista === 'exito' && compra !== null ? (
-        <PantallaExito numeroOrden={compra.orden ?? ''} ultimosCuatro={compra.ultimosCuatro} />
+        <PantallaExito
+          numeroOrden={compra.orden ?? ''}
+          ultimosCuatro={compra.ultimosCuatro}
+          onSeguirComprando={volverAlProducto}
+        />
       ) : vista === 'pago' ? (
         <section className="tarjeta">
           <p className="producto__stock">Total a pagar: {formatearDinero(totalPedido)}</p>
